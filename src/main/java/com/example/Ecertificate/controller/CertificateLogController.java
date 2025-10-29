@@ -22,6 +22,12 @@ public class CertificateLogController {
     public List<CertificateLog> getAllLogs() {
         return logService.getAllLogs();
     }
+    @GetMapping("/user/{userId}")
+    public List<CertificateLog> getLogsByUser(@PathVariable Integer userId) {
+        return logService.getLogsByUserId(userId);
+    }
+
+
 
 
 }
