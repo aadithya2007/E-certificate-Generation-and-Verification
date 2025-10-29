@@ -27,5 +27,13 @@ public class CertificateController {
         return certificateService.createCertificateTemplate(certificate);
     }
 
+    @GetMapping
+    public List<Certificate> getAllCertificates() {
+        return certificateService.getAllCertificates();
+    }
+
+
+
+
 
 }
