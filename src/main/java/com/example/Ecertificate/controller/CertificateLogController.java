@@ -27,7 +27,10 @@ public class CertificateLogController {
         return logService.getLogsByUserId(userId);
     }
 
-
+    @PostMapping
+    public CertificateLog addLogEntry(@RequestBody LogRequestDTO logRequest) {
+        return logService.addManualLog(logRequest);
+    }
 
 
 }
