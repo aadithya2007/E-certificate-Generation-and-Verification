@@ -1,6 +1,7 @@
 package com.example.Ecertificate.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +29,8 @@ public class Certificate {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
+    @JsonIgnore
     private User user;
 
     private String name;
@@ -46,9 +48,9 @@ public class Certificate {
     @Column(name = "signature_path")
     private String signaturePath;
 
-    @Column(name = "verification_code", unique = true, nullable = false)
+    @Column(name = "verification_code", unique = true, nullable =true)
     private UUID verificationCode;
 
-    @Column(name = "issued_date")
+    @Column(name = "issued_date", nullable = true )
     private LocalDate issuedDate;
 }

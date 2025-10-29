@@ -1,4 +1,12 @@
 package com.example.Ecertificate.repository;
 
-public interface CertificateLogRepo {
+
+
+
+import com.example.Ecertificate.models.CertificateLog;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface CertificateLogRepo extends JpaRepository<CertificateLog, Integer> {
 }

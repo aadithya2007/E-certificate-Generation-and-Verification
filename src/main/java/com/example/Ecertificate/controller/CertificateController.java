@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/certificates")
+@RequestMapping("/certificates")
 public class CertificateController {
 
     @Autowired
@@ -43,23 +43,18 @@ public class CertificateController {
         return certificateService.assignCertificate(userId, certificateId);
     }
 
-
     @GetMapping("/download/{certificateId}")
     public ResponseEntity<Resource> downloadCertificatePdf(@PathVariable Integer certificateId) {
 
-
         try {
-            Resource pdfResource = certificateService.downloadCertificatePdf(certificateId);
-            String filename = "certificate-" + certificateId + ".pdf";
-
+            Resource resource = certificateService.downloadCertificatePdf(certificateId);
+            String filename = "certificate-" + certificateId + ".txt";
             return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_PDF)
+                    .contentType(MediaType.TEXT_PLAIN)
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
-                    .body(pdfResource);
-
+                    .body(resource);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                    .body(null);
+            return ResponseEntity.internalServerError().body(null);
         }
     }
 
