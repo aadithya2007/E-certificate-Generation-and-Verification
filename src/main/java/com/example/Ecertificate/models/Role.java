@@ -1,4 +1,7 @@
 package com.example.Ecertificate.models;
 
-public class Role {
+public enum Role {
+    ADMIN,
+    FACULTY,
+    STUDENT
 }
