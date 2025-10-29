@@ -30,7 +30,10 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getUser();
     }
-
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Integer id) {
+        return userService.getUserById(id);
+    }
 
 
 
