@@ -31,6 +31,11 @@ public class CertificateController {
     public List<Certificate> getAllCertificates() {
         return certificateService.getAllCertificates();
     }
+    @GetMapping("/{id}")
+    public Certificate getCertificateById(@PathVariable Integer id) {
+        return certificateService.getCertificateById(id);
+    }
+
 
 
 
