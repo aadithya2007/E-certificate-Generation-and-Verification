@@ -44,6 +44,17 @@ public class CertificateService {
     public Certificate getCertificateById(Integer id) {
         return certificateRepo.findById(id).orElse(null);
     }
+    public String deleteCertificate(Integer id) {
+        Certificate cert = certificateRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Certificate not found with id: " + id + " for logging deletion."));
+        CertificateLog log = new CertificateLog();
+        log.setCertificate(cert);
+        String userName = (cert.getUser() != null) ? cert.getUser().getName() : "Template";
+        log.setAction("DELETED - Certificate ID " + id + " (Title: " + cert.getCertificateTitle() + ", User: " + userName + ")");
+        logRepo.save(log);
+        certificateRepo.deleteById(id);
+        return "Certificate with ID " + id + " is deleted";
+    }
 
     public Certificate assignCertificate(Integer userId, Integer certificateTemplateId) {
         Certificate template = certificateRepo.findById(certificateTemplateId)
@@ -94,6 +105,15 @@ public class CertificateService {
                 + "Verification Code: " + cert.getVerificationCode();
 
         byte[] data = content.getBytes();
+        CertificateLog log = new CertificateLog();
+        log.setCertificate(cert); // Log against the certificate being downloaded
+        log.setAction("DOWNLOADED - Certificate ID " + certificateId + " downloaded (User: " + userName + ")");
+        logRepo.save(log);
+
         return new ByteArrayResource(data);
+    }
+
+    public List<Certificate> getCertificatesForUser(Integer userId) {
+        return certificateRepo.findByUserId(userId);
     }
 }

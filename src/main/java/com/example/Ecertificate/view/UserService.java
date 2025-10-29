@@ -57,13 +57,12 @@ public class UserService {
     }
 
 
-    public String loginUser(String email, String password) {
+    public Role loginUser(String email, String password) {
         Optional<User> user = userRepo.findByEmail(email);
         if (user.isPresent() && user.get().getPassword().equals(password)) {
-
-            return "Login Successful";
+            return user.get().getRole();
         }
-        return "Invalid credentials";
+        throw new RuntimeException("Invalid credentials");
     }
 
 
