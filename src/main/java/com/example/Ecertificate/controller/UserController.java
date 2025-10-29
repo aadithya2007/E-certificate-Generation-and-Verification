@@ -26,6 +26,11 @@ public class UserController {
         String password = credentials.get("password");
         return userService.loginUser(email, password);
     }
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.getUser();
+    }
+
 
 
 
