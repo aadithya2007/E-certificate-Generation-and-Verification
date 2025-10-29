@@ -1,5 +1,6 @@
 package com.example.Ecertificate.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +28,7 @@ public class CertificateLog {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "certificate_id", nullable = false)
+    @JsonIgnore
     private Certificate certificate;
 
     @Column(nullable = false)

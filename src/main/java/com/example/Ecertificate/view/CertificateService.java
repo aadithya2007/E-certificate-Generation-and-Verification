@@ -2,7 +2,9 @@ package com.example.Ecertificate.view;
 
 
 import com.example.Ecertificate.models.Certificate;
+import com.example.Ecertificate.models.CertificateLog;
 import com.example.Ecertificate.models.User;
+import com.example.Ecertificate.repository.CertificateLogRepo;
 import com.example.Ecertificate.repository.CertificateRepo;
 import com.example.Ecertificate.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class CertificateService {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private CertificateLogRepo logRepo;
 
 
     public Certificate createCertificateTemplate(Certificate certificate) {
@@ -42,7 +46,6 @@ public class CertificateService {
     }
 
     public Certificate assignCertificate(Integer userId, Integer certificateTemplateId) {
-
         Certificate template = certificateRepo.findById(certificateTemplateId)
                 .orElseThrow(() -> new RuntimeException("Certificate template not found with id: " + certificateTemplateId));
 
@@ -56,13 +59,21 @@ public class CertificateService {
         assignedCertificate.setEventDetails(template.getEventDetails());
         assignedCertificate.setSignaturePath(template.getSignaturePath());
 
-
         assignedCertificate.setUser(user);
         assignedCertificate.setIssuedDate(LocalDate.now());
         assignedCertificate.setVerificationCode(UUID.randomUUID());
 
 
-        return certificateRepo.save(assignedCertificate);
+        Certificate savedCertificate = certificateRepo.save(assignedCertificate);
+
+
+        CertificateLog log = new CertificateLog();
+        log.setCertificate(savedCertificate);
+        log.setAction("ASSIGNED - Certificate template " + certificateTemplateId + " assigned to user " + user.getName());
+        logRepo.save(log);
+
+
+        return savedCertificate;
     }
 
 
