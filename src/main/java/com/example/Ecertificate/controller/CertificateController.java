@@ -36,9 +36,31 @@ public class CertificateController {
         return certificateService.getCertificateById(id);
     }
 
+    @PostMapping("/assign/{userId}")
+    public Certificate assignCertificate(
+            @PathVariable Integer userId,
+            @RequestParam Integer certificateId) {
+        return certificateService.assignCertificate(userId, certificateId);
+    }
 
 
+    @GetMapping("/download/{certificateId}")
+    public ResponseEntity<Resource> downloadCertificatePdf(@PathVariable Integer certificateId) {
 
 
+        try {
+            Resource pdfResource = certificateService.downloadCertificatePdf(certificateId);
+            String filename = "certificate-" + certificateId + ".pdf";
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .body(pdfResource);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(null);
+        }
+    }
 
 }
