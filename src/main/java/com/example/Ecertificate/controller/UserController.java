@@ -20,6 +20,13 @@ public class UserController {
     public User registerUser(@RequestBody User user) {
         return userService.addUser(user);
     }
+    @PostMapping("/login")
+    public String loginUser(@RequestBody Map<String, String> credentials) {
+        String email = credentials.get("email");
+        String password = credentials.get("password");
+        return userService.loginUser(email, password);
+    }
+
 
 
 }
