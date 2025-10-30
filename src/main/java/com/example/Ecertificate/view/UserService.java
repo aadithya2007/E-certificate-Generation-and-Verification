@@ -3,6 +3,7 @@ package com.example.Ecertificate.view;
 
 
 
+import com.example.Ecertificate.dto.LoginResponseDTO;
 import com.example.Ecertificate.models.User;
 import com.example.Ecertificate.models.Role;
 import com.example.Ecertificate.repository.UserRepo;
@@ -57,10 +58,11 @@ public class UserService {
     }
 
 
-    public Role loginUser(String email, String password) {
-        Optional<User> user = userRepo.findByEmail(email);
-        if (user.isPresent() && user.get().getPassword().equals(password)) {
-            return user.get().getRole();
+    public LoginResponseDTO loginUser(String email, String password) {
+        Optional<User> userOptional = userRepo.findByEmail(email);
+        if (userOptional.isPresent() && userOptional.get().getPassword().equals(password)) {
+            User user = userOptional.get();
+            return new LoginResponseDTO(user.getId(), user.getRole());
         }
         throw new RuntimeException("Invalid credentials");
     }

@@ -1,5 +1,6 @@
 package com.example.Ecertificate.controller;
 
+import com.example.Ecertificate.dto.LoginResponseDTO;
 import com.example.Ecertificate.models.Role;
 import com.example.Ecertificate.models.User;
 import com.example.Ecertificate.view.UserService;
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Role loginUser(@RequestBody Map<String, String> credentials) {
+    public LoginResponseDTO loginUser(@RequestBody Map<String, String> credentials) {
         String email = credentials.get("email");
         String password = credentials.get("password");
         try {
@@ -36,6 +37,7 @@ public class UserController {
 
     @GetMapping
     public List<User> getAllUsers(@RequestHeader(value = "X-User-Role", defaultValue = "STUDENT") Role userRole) {
+        System.out.println("Received Role Header: " + userRole);
         if (userRole != Role.ADMIN) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access Denied");
         }

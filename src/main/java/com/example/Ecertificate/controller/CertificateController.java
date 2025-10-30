@@ -50,6 +50,7 @@ public class CertificateController {
     @GetMapping("/{id}")
     public Certificate getCertificateById(@PathVariable Integer id,
         @RequestHeader(value = "X-User-Role", defaultValue = "STUDENT") Role userRole){
+           ;
             if (userRole != Role.ADMIN && userRole != Role.FACULTY) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access Denied");
             }
@@ -61,7 +62,7 @@ public class CertificateController {
     public List<Certificate> getMyCertificates(
             @RequestHeader("X-User-Role") Role userRole,
             @RequestHeader("X-User-Id") Integer userId) {
-
+        System.out.print(userId);
         if (userRole != Role.STUDENT) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only students can access their certificates this way.");
         }
