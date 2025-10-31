@@ -1,8 +1,4 @@
 package com.example.Ecertificate.view;
-
-
-
-
 import com.example.Ecertificate.dto.LoginResponseDTO;
 import com.example.Ecertificate.models.User;
 import com.example.Ecertificate.models.Role;

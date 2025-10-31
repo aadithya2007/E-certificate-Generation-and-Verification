@@ -101,7 +101,7 @@ public class CertificateController {
     public ResponseEntity<Resource> downloadCertificatePdf(@PathVariable Integer certificateId) {
         try {
             Resource resource = certificateService.downloadCertificatePdf(certificateId);
-            String filename = "certificate-" + certificateId + ".txt";
+            String filename = "certificate-" + certificateId + ".txt";2
             return ResponseEntity.ok()
                     .contentType(MediaType.TEXT_PLAIN)
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
